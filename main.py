@@ -25,11 +25,11 @@ def chat_with_bot(user_input):
     st.session_state.messages.append({"role": "user", "content": user_input})
 
     # Get model response
-    response = llm_client.chat_completion(
-        messages=st.session_state.messages,
-        temperature=0.7,
-        max_tokens=900
-    )
+    response = llm_client = InferenceClient(
+    model="microsoft/Phi-3-mini-4k-instruct",
+    token=os.getenv("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"),
+    timeout=120
+)
 
     bot_message = response['choices'][0]['message']['content']
     # Add bot message to history
