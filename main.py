@@ -17,6 +17,7 @@ llm_client = InferenceClient(
     model="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
     token=st.secrets["HF_TOKEN"]
 )    
+
 def chat_with_bot(user_input):
     if "messages" not in st.session_state:
         st.session_state.messages = [
@@ -38,8 +39,6 @@ def chat_with_bot(user_input):
     st.session_state.messages.append({"role": "assistant", "content": bot_message})
 
     return bot_message
-
-
 
 # ----------------------------
 # Utility Functions
@@ -138,24 +137,21 @@ with col1:
     st.header("🎥 Emotion Detection")
     webrtc_streamer(
         key="emotion_detection",
-        video_transformer_factory=EmotionRecognitionTransformer,
+        video_processor_factory=EmotionRecognitionTransformer,  # updated here
         media_stream_constraints={"video": True, "audio": False},
-        async_processing=True,
+        async_processing=True,  # try False if async issues persist
     )
-
 
 with col2:
     st.header("💬 Chatbot Assistant")
     st.markdown("Ask for mood-improving activity suggestions.")
 
-    # Use chat_input to get the new message
+    if "chat_log" not in st.session_state:
+        st.session_state.chat_log = []
+
     user_input = st.chat_input("You:")
 
     if user_input:
-        # Clear previous chat history
-        st.session_state.chat_log = []
-
-        # Append the current user message and bot response
         st.session_state.chat_log.append(("You", user_input))
 
         with st.spinner("Bot is thinking..."):
@@ -163,8 +159,6 @@ with col2:
 
         st.session_state.chat_log.append(("Bot", response))
 
-    # Display only the latest chat log (which has max two messages)
-    if "chat_log" in st.session_state:
-        for speaker, message in st.session_state.chat_log:
-            with st.chat_message("user" if speaker == "You" else "assistant"):
-                st.markdown(message)
+    for speaker, message in st.session_state.chat_log:
+        with st.chat_message("user" if speaker == "You" else "assistant"):
+            st.markdown(message)
