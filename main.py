@@ -89,7 +89,7 @@ def draw_info_text(image, brect, facial_text):
 # ----------------------------
 # Emotion Recognition Class
 # ----------------------------
-class EmotionRecognitionTransformer(VideoTransformerBase):
+class EmotionRecognitionProcessor(VideoProcessorBase):
     def __init__(self):
         self.mp_face_mesh = mp.solutions.face_mesh
         self.face_mesh = self.mp_face_mesh.FaceMesh(
@@ -133,10 +133,10 @@ col1, col2 = st.columns(2)
 with col1:
     st.header("🎥 Emotion Detection")
     webrtc_streamer(
-        key="emotion_detection",
-        video_transformer_factory=EmotionRecognitionTransformer,
-        media_stream_constraints={"video": True, "audio": False},
-        async_processing=True,
+    key="emotion_detection",
+    video_processor_factory=EmotionRecognitionProcessor,
+    media_stream_constraints={"video": True, "audio": False},
+    async_processing=True,
     )
 
 
