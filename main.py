@@ -30,6 +30,7 @@ def chat_with_bot(user_input):
     token=os.getenv("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"),
     timeout=120
 )
+    print("Chatbot response:", response)
 
     bot_message = response['choices'][0]['message']['content']
     # Add bot message to history
