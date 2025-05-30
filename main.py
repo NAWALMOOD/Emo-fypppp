@@ -16,6 +16,7 @@ from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
 llm_client = InferenceClient(
     model="microsoft/Phi-3-mini-4k-instruct",
     token=st.secrets["HF_TOKEN"]
+)    
 def chat_with_bot(user_input):
     if "messages" not in st.session_state:
         st.session_state.messages = [
