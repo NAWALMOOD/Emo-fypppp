@@ -8,7 +8,8 @@ import mediapipe as mp
 import streamlit as st
 from huggingface_hub import InferenceClient
 from model import KeyPointClassifier
-from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
+# from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
+from streamlit_webrtc import VideoProcessorBase, webrtc_streamer
 
 # ----------------------------
 # Hugging Face Chatbot Setup
