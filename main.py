@@ -1,4 +1,4 @@
-
+import os
 import copy
 import csv
 import itertools
@@ -36,7 +36,6 @@ def chat_with_bot(user_input):
     st.session_state.messages.append({"role": "assistant", "content": bot_message})
 
     return bot_message
-
 
 # ----------------------------
 # Utility Functions
