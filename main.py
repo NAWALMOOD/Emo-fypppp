@@ -23,21 +23,22 @@ def chat_with_bot(user_input):
             {"role": "system", "content": "You are a helpful assistant who gives thoughtful and emotionally intelligent activity suggestions."}
         ]
 
-    # Add user message
     st.session_state.messages.append({"role": "user", "content": user_input})
 
-    # Get model response
-    response = llm_client.chat_completion(
-        messages=st.session_state.messages,
-        temperature=0.7,
-        max_tokens=900
-    )
+    try:
+        response = llm_client.chat_completion(
+            messages=st.session_state.messages,
+            temperature=0.7,
+            max_tokens=900
+        )
+    except Exception as e:
+        return f"Error communicating with model: {e}"
 
     bot_message = response['choices'][0]['message']['content']
-    # Add bot message to history
     st.session_state.messages.append({"role": "assistant", "content": bot_message})
 
     return bot_message
+
 
 
 # ----------------------------
